@@ -1,6 +1,6 @@
 # P5-Kanap
 This is the front end and back end server for Project 5 of the Web Developer path.
-Project was to write the back and front code so the site can transfer data from the browser into the API.
+Project was to write the frontend code to connect client side to server side.
 
 #Features#
 
