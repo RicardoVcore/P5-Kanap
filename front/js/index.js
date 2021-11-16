@@ -10,7 +10,6 @@ async function productDisplay() {
     var resultElements = await getArticles()
         .then(function (resultAPI) {
             const articles = resultAPI;
-            console.log(articles);
             for (let article in articles) {
                 // Inserting the "a"
                 let productLink = document.createElement("a");
@@ -43,5 +42,5 @@ async function productDisplay() {
         .catch(function (error) {
             return error;
         });
-    console.log(resultElements);
+
 }

@@ -1,8 +1,4 @@
-const idOrder = localStorage.getItem("orderId");
-document.querySelector("#orderId").innerText = idOrder;
-console.log(idOrder);
-localStorage.clear();
-
-if (idOrder == null) {
-    window.location.href = "../html/index.html";
-}
+const queryString_url_id = window.location.search;
+const uRLSearchParams = new URLSearchParams(queryString_url_id);
+const id = uRLSearchParams.get("orderId");
+document.querySelector("#orderId").innerText = id;

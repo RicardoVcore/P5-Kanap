@@ -2,7 +2,7 @@ var str = window.location.href;
 var url = new URL(str);
 //get product ID
 var idProduct = url.searchParams.get("id");
-console.log(idProduct);
+
 let article = "";
 
 const colorPicked = document.querySelector("#colors");
@@ -18,7 +18,7 @@ function getArticle() {
         //Distribution of API data in the DOM
         .then(async function (resultAPI) {
             article = await resultAPI;
-            console.log(article);
+
             if (article) {
                 getPost(article);
             }

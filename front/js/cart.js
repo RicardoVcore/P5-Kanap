@@ -1,6 +1,6 @@
 //GETTING PRODUCTS FROM LOCAL STORAGE
 let produitStockerDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
-console.log(produitStockerDansLocalStorage);
+
 const positionEmptyCart = document.querySelector("#cart__items");
 
 // IF EMPTY CART THEM
@@ -92,7 +92,7 @@ function getPrice() {
 
     let productTotalQuantity = document.getElementById('totalQuantity');
     productTotalQuantity.innerHTML = totalQt;
-    console.log(totalQt);
+
 
     // GET TOTAL ORDER PRICE
     totalPrice = 0;
@@ -103,7 +103,7 @@ function getPrice() {
 
     let productTotalPrice = document.getElementById('totalPrice');
     productTotalPrice.innerHTML = totalPrice;
-    console.log(totalPrice);
+
 }
 getPrice();
 // CHANGE PRODUCTS QUANTITY 
@@ -113,8 +113,6 @@ function modifyQt() {
     for (let k = 0; k < qtModify.length; k++) {
         qtModify[k].addEventListener("change", (event) => {
             event.preventDefault();
-            console.log("itemselector");
-            console.log(qtModify[k]);
             //THIS SELECTS ID AND COLOR OF PRODUCT
             let quantityModify = produitStockerDansLocalStorage[k].productQuantity;
             let qtModifyValue = qtModify[k].value;
@@ -166,13 +164,9 @@ form.addEventListener('submit', function (e) {
         && validAddress(form.address)
         && validCity(form.city)
         && validEmail(form.email)
-    ) {
-
-        console.log('OK');
-    } else {
-        console.log('Not OK');
-    }
+    );
 });
+
 //FIRSTNAME
 const validFirstName = function (inputObject) {  //inputObject is the field associated with
     let validRegExp = new RegExp('^[A-Za-z]+((\s)?((\'|\-|\.)?([A-Za-z])+))*$');
@@ -276,24 +270,26 @@ form.email.addEventListener('change', function () {
 
 });
 
-//SENDING CLIENT INFORMATION TO LOCAL STORAGE
-function postForm() {
-    const btnCommander = document.getElementById("order");
 
-    //LISTENING TO CART
-    btnCommander.addEventListener("click", (event) => {
-        //GET DATA FROM CLIENT FORM
-        let inputFirstName = document.getElementById('firstName');
-        let inputLastName = document.getElementById('lastName');
-        let inputAddress = document.getElementById('address');
-        let inputCity = document.getElementById('city');
-        let inputEmail = document.getElementById('email');
-        //BUILD ARRAY AFTER LOCAL STORAGE???
-        let produitPanier = [];
-        for (let i = 0; i < produitStockerDansLocalStorage.length; i++) {
-            produitPanier.push(produitStockerDansLocalStorage[i].produitPanier);
-        }
-        console.log(produitPanier);
+//SENDING CLIENT INFORMATION TO LOCAL STORAGE
+const btnCommander = document.getElementById("order");
+
+//LISTENING TO CART
+btnCommander.addEventListener("click", (event) => {
+    //GET DATA FROM CLIENT FORM
+    let inputFirstName = document.getElementById('firstName');
+    let inputLastName = document.getElementById('lastName');
+    let inputAddress = document.getElementById('address');
+    let inputCity = document.getElementById('city');
+    let inputEmail = document.getElementById('email');
+    //BUILD ARRAY AFTER LOCAL STORAGE???
+    let produitPanier = [];
+    for (let i = 0; i < produitStockerDansLocalStorage.length; i++) {
+        produitPanier.push(produitStockerDansLocalStorage[i].produitPanier);
+    }
+    console.log(produitPanier);
+    if (validFirstName(inputFirstName) && validLastName(inputLastName) && validAddress(inputAddress) && validCity(inputCity) && validEmail(inputEmail)) {
+
 
         const orderValues = {
             contact: {
@@ -321,17 +317,23 @@ function postForm() {
                 console.log(data);
                 //Cleans info for security
                 localStorage.clear();
-                //this api tester returns _id insted of orderId
-                localStorage.setItem("orderId", data._id);
-                // Loads Confirmation page
-                document.location.href = "confirmation.html";
+
+
+                window.location.href = "../html/confirmation.html";
+                const url = window.location;
+                const urlParams = new URLSearchParams(url.search);
+                urlParams.set('orderId', data._id);
+                window.location.href = "../html/confirmation.html" + "?" + urlParams;
+
             })
             .catch((err) => {
                 alert("Problem with fetch : " + err.message);
             });
-    })
-}
-postForm();
+    } else {
+        alert("Veuillez bien remplir le formulaire")
+    }
+})
+
 
 
 
